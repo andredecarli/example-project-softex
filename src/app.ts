@@ -8,6 +8,8 @@ import initializeDb from './db/index.js';
 
 const port = process.env.PORT || 3000;
 
+console.log('dale');
+
 const start = async () => {
   const app = express();
 
@@ -39,6 +41,7 @@ const start = async () => {
   app.use(admin.options.rootPath, router);
 
   app.listen(port, () => {
+    // eslint-disable-next-line
     console.log(`Test available at http://localhost:${port}${admin.options.rootPath}`);
   });
 };
