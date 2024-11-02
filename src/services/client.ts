@@ -1,6 +1,6 @@
 import { BadRequestError } from 'src/util/errors/badRequestError.js';
 import { NotFoundError } from 'src/util/errors/notFoundError.js';
-import ClientRepository from 'src/repositories/client/index.js';
+import ClientRepository from 'src/repositories/client.js';
 import { UnauthorizedError } from 'src/util/errors/unauthorizedError.js';
 import bcrypt from 'bcrypt';
 
@@ -43,7 +43,8 @@ export default class ClientService {
       throw new NotFoundError('client not found');
     }
     const newPassword = await bcrypt.hash(password, 10);
-    await ClientRepository.update({ id, login, password: newPassword });
+    const updatedClient = await ClientRepository.update({ id, login, password: newPassword });
+    return updatedClient;
   }
 
   static async auth(login: string, password: string) {

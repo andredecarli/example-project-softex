@@ -1,7 +1,7 @@
 import express from 'express';
 import { BadRequestError } from 'src/util/errors/badRequestError.js';
 import { handleErrors } from 'src/util/errors/handleErrors.js';
-import ClientService from 'src/services/client/index.js';
+import ClientService from 'src/services/client.js';
 
 const router = express.Router();
 
@@ -91,8 +91,8 @@ router.put('/:id', async (req, res) => {
       throw new BadRequestError('invalid client id');
     }
 
-    await ClientService.update(_id, login, password);
-    res.status(204).send();
+    const client = await ClientService.update(_id, login, password);
+    res.json(client);
   } catch (error) {
     handleErrors(res, error);
     res.json({ message: error.message });
