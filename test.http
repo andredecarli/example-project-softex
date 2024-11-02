@@ -12,7 +12,7 @@ GET http://localhost:3000/client
 
 ###
 
-GET http://localhost:3000/client/5
+GET http://localhost:3000/client/10
 
 ###
 
@@ -34,3 +34,25 @@ Content-Type: application/json
 {
   "name": "Cafés"
 }
+
+###
+GET http://localhost:3000/category
+
+###
+GET http://localhost:3000/category/1
+
+###
+DELETE http://localhost:3000/category/1
+
+###
+POST http://localhost:3000/product
+Content-Type: application/json
+
+{
+  "name": "Pilão",
+  "price": 4.5,
+  "categoryId": 2
+}
+
+###
+GET http://localhost:3000/product

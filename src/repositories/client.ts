@@ -6,15 +6,19 @@ export default class ClientRepository {
   }
 
   static async getByLogin(login: string) {
-    return prisma.client.findUnique({ where: { login } });
+    return prisma.client.findUnique({ where: { login }, select: { id: true, login: true } });
+  }
+
+  static async getPasswordById(id: number) {
+    return prisma.client.findUnique({ where: { id }, select: { password: true } });
   }
 
   static async getAll() {
-    return prisma.client.findMany();
+    return prisma.client.findMany({ select: { id: true, login: true } });
   }
 
   static async getById(id: number) {
-    return prisma.client.findUnique({ where: { id } });
+    return prisma.client.findUnique({ where: { id }, select: { id: true, login: true } });
   }
 
   static async deleteById(id: number) {
@@ -26,9 +30,10 @@ export default class ClientRepository {
       where: {
         id: client.id,
       },
-      data: {
-        login: client.login,
-        password: client.password,
+      data: client,
+      select: {
+        id: true,
+        login: true,
       },
     });
   }
