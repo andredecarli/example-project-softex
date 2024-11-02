@@ -1,7 +1,7 @@
 import prisma from 'src/db/index.js';
 
 export default class ProductRepository {
-  static async insert(product: {name: string, price: number, categoryId: number}) {
+  static async insert(product: {name: string, price: number, categoryId: number, stock: number}) {
     return prisma.product.create({ data: product });
   }
 
@@ -10,7 +10,7 @@ export default class ProductRepository {
   }
 
   static async getAll() {
-    return prisma.product.findMany({ include: { category: true } });
+    return prisma.product.findMany();
   }
 
   static async getById(id: number) {
@@ -25,7 +25,7 @@ export default class ProductRepository {
     return prisma.product.delete({ where: { id } });
   }
 
-  static async update(product: {id: number, name: string, price: number, categoryId: number}) {
+  static async update(product: {id: number, name: string, price: number, categoryId: number, stock: number}) {
     return prisma.product.update({
       where: {
         id: product.id,

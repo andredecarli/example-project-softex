@@ -1,21 +1,17 @@
 import ProductRepository from 'src/repositories/product.js';
-import { BadRequestError } from 'src/util/errors/badRequestError.js';
 import { NotFoundError } from 'src/util/errors/notFoundError.js';
 
 export default class ProductService {
-  static async insert(name: string, price: number, categoryId: number) {
-    const product = await ProductRepository.getByName(name);
-    if (product) {
-      throw new BadRequestError('product already exists');
-    }
-
-    const newproduct = await ProductRepository.insert({ name, price, categoryId });
-    return newproduct;
+  static async insert(name: string, price: number, categoryId: number, stock: number) {
+    const newProduct = await ProductRepository.insert({
+      name, price, categoryId, stock,
+    });
+    return newProduct;
   }
 
   static async list() {
-    const clients = await ProductRepository.getAll();
-    return clients;
+    const products = await ProductRepository.getAll();
+    return products;
   }
 
   static async getById(id: number) {
@@ -39,14 +35,14 @@ export default class ProductService {
     await ProductRepository.deleteById(id);
   }
 
-  static async update(id: number, name: string, price: number, categoryId: number) {
+  static async update(id: number, name: string, price: number, categoryId: number, stock: number) {
     const product = await ProductRepository.getById(id);
     if (!product) {
       throw new NotFoundError('product not found');
     }
-    const updatedproduct = await ProductRepository.update({
-      id, name, price, categoryId,
+    const updatedProduct = await ProductRepository.update({
+      id, name, price, categoryId, stock,
     });
-    return updatedproduct;
+    return updatedProduct;
   }
 }

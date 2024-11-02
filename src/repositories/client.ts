@@ -2,7 +2,7 @@ import prisma from 'src/db/index.js';
 
 export default class ClientRepository {
   static async insert(client: {login: string, password: string }) {
-    return prisma.client.create({ data: client });
+    return prisma.client.create({ data: client, select: { id: true, login: true } });
   }
 
   static async getByLogin(login: string) {

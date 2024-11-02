@@ -14,8 +14,8 @@ export default class CategoryService {
   }
 
   static async list() {
-    const clients = await CategoryRepository.getAll();
-    return clients;
+    const categories = await CategoryRepository.getAll();
+    return categories;
   }
 
   static async getById(id: number) {

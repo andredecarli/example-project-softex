@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import ProductService from 'src/services/product.js';
+import OrderService from 'src/services/order.js';
 import { BadRequestError } from 'src/util/errors/badRequestError.js';
 import { handleErrors } from 'src/util/errors/handleErrors.js';
 
@@ -7,12 +7,10 @@ const router = Router();
 
 router.post('/', async (req, res) => {
   try {
-    const {
-      name, price, categoryId, stock,
-    } = req.body;
+    const { clientId, items } = req.body;
 
-    const product = await ProductService.insert(name, price, categoryId, stock);
-    res.status(201).json(product);
+    const order = await OrderService.insert(clientId, items);
+    res.status(201).json(order);
   } catch (error) {
     handleErrors(res, error);
     res.json({ message: error.message });
@@ -21,8 +19,8 @@ router.post('/', async (req, res) => {
 
 router.get('/', async (req, res) => {
   try {
-    const product = await ProductService.list();
-    res.json(product);
+    const order = await OrderService.list();
+    res.json(order);
   } catch (error) {
     handleErrors(res, error);
     res.json({ message: error.message });
@@ -39,26 +37,26 @@ router.get('/:id', async (req, res) => {
       throw new BadRequestError('invalid product id');
     }
 
-    const product = await ProductService.getById(_id);
-    res.json(product);
+    const order = await OrderService.getById(_id);
+    res.json(order);
   } catch (error) {
     handleErrors(res, error);
     res.json({ message: error.message });
   }
 });
 
-router.get('/category/:id', async (req, res) => {
+router.get('/client/:id', async (req, res) => {
   try {
     const { id } = req.params;
 
     // validação
     const _id = Number(id);
     if (Number.isNaN(_id) || !Number.isInteger(_id)) {
-      throw new BadRequestError('invalid category id');
+      throw new BadRequestError('invalid client id');
     }
 
-    const products = await ProductService.getByCategoryId(_id);
-    res.json(products);
+    const order = await OrderService.getByClientId(_id);
+    res.json(order);
   } catch (error) {
     handleErrors(res, error);
     res.json({ message: error.message });
@@ -75,29 +73,8 @@ router.delete('/:id', async (req, res) => {
       throw new BadRequestError('invalid product id');
     }
 
-    await ProductService.delete(_id);
+    await OrderService.delete(_id);
     res.status(204).send();
-  } catch (error) {
-    handleErrors(res, error);
-    res.json({ message: error.message });
-  }
-});
-
-router.put('/:id', async (req, res) => {
-  try {
-    const { id } = req.params;
-    const {
-      name, price, categoryId, stock,
-    } = req.body;
-
-    // validação
-    const _id = Number(id);
-    if (Number.isNaN(_id) || !Number.isInteger(_id)) {
-      throw new BadRequestError('invalid product id');
-    }
-
-    const updated = await ProductService.update(_id, name, price, categoryId, stock);
-    res.json(updated);
   } catch (error) {
     handleErrors(res, error);
     res.json({ message: error.message });

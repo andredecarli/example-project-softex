@@ -1,24 +1,22 @@
+### Registra um novo Cliente
 POST http://localhost:3000/client
 Content-Type: application/json
 
 {
-  "login": "deco",
+  "login": "luisa",
   "password": "12345"
 }
 
-###
-
+### Lista os Clientes
 GET http://localhost:3000/client
 
-###
+### Informações sobre um Cliente por id
+GET http://localhost:3000/client/12
 
-GET http://localhost:3000/client/10
+### Apaga um Cliente por id
+DELETE http://localhost:3000/client/11
 
-###
-
-DELETE http://localhost:3000/client/9
-
-###
+### Autenticação (extra, precisa ser incrementado)
 POST http://localhost:3000/client/login
 Content-Type: application/json
 
@@ -27,32 +25,82 @@ Content-Type: application/json
   "password": "12345"
 }
 
-###
+
+### Cria uma nova Categoria
 POST http://localhost:3000/category
 Content-Type: application/json
 
 {
-  "name": "Cafés"
+  "name": "Camisa"
 }
 
-###
+### Lista as Categorias
 GET http://localhost:3000/category
 
-###
-GET http://localhost:3000/category/1
+### Detalhes de uma Categoria por id
+GET http://localhost:3000/category/5
 
-###
-DELETE http://localhost:3000/category/1
+### Apaga uma Categoria (Não pode ter produtos associados)
+DELETE http://localhost:3000/category/2
 
-###
+
+### Cria um Produto
 POST http://localhost:3000/product
 Content-Type: application/json
 
 {
-  "name": "Pilão",
-  "price": 4.5,
-  "categoryId": 2
+  "name": "Polo G Vermelha",
+  "price": 199.90,
+  "categoryId": 7,
+  "stock": 4
 }
 
-###
+### Lista os Produtos
 GET http://localhost:3000/product
+
+### Detalhes de um Produto por id
+GET http://localhost:3000/product/6
+
+### Lista de Produtos por categoria
+GET http://localhost:3000/product/category/5
+
+### Apaga um Produto por id
+DELETE http://localhost:3000/product/5
+
+### Edita um Produto por id
+PUT http://localhost:3000/product/6
+Content-Type: application/json
+
+{
+  "name": "Harry Potter",
+  "price": 49.5,
+  "categoryId": 5,
+  "stock": 10
+}
+
+
+### Cria um Pedido
+POST http://localhost:3000/order
+Content-Type: application/json
+
+{
+  "clientId": 13,
+  "items": [
+    {
+    "productId": 10,
+    "amount": 1
+    },
+    {
+      "productId": 7,
+      "amount": 2
+    }
+  ]
+}
+
+
+### Lista os pedidos
+GET http://localhost:3000/order
+
+
+## Detalha um pedido por id
+GET http://localhost:3000/order/3
