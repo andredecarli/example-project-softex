@@ -1,24 +1,35 @@
-import { Client, Prisma, PrismaClient } from '@prisma/client';
-import { DefaultArgs } from '@prisma/client/runtime/library';
 import prisma from 'src/db/index.js';
 
-export class ClientRepository {
-  #prisma: PrismaClient<Prisma.PrismaClientOptions, never, DefaultArgs>;
-
-  constructor(prismaClient: PrismaClient<Prisma.PrismaClientOptions, never, DefaultArgs>) {
-    this.#prisma = prismaClient;
+export default class ClientRepository {
+  static async insert(client: {login: string, password: string }) {
+    return prisma.client.create({ data: client });
   }
 
-  async insert(client: Prisma.ClientCreateInput): Promise<Client | undefined> {
-    try {
-      return await this.#prisma.client.create({
-        data: client,
-      });
-    } catch (err) {
-      return undefined;
-    }
+  static async getByLogin(login: string) {
+    return prisma.client.findUnique({ where: { login } });
+  }
+
+  static async getAll() {
+    return prisma.client.findMany();
+  }
+
+  static async getById(id: number) {
+    return prisma.client.findUnique({ where: { id } });
+  }
+
+  static async deleteById(id: number) {
+    return prisma.client.delete({ where: { id } });
+  }
+
+  static async update(client: {id: number, login: string, password: string}) {
+    return prisma.client.update({
+      where: {
+        id: client.id,
+      },
+      data: {
+        login: client.login,
+        password: client.password,
+      },
+    });
   }
 }
-
-const clientRepository = new ClientRepository(prisma);
-export default clientRepository;
