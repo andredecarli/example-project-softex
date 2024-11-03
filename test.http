@@ -87,20 +87,33 @@ Content-Type: application/json
   "clientId": 13,
   "items": [
     {
-    "productId": 10,
+    "productId": 13,
     "amount": 1
-    },
-    {
-      "productId": 7,
-      "amount": 2
     }
   ]
 }
 
-
 ### Lista os pedidos
 GET http://localhost:3000/order
 
-
-## Detalha um pedido por id
+### Detalha um pedido por id
 GET http://localhost:3000/order/3
+
+### Lista pedidos por cliente
+GET http://localhost:3000/order/client/13
+
+### Apaga um pedido por id
+DELETE http://localhost:3000/order/2
+
+
+###
+GET http://localhost:3000/report/stock
+
+###
+GET http://localhost:3000/report/stock/category/5
+
+###
+GET http://localhost:3000/report/sold-products?startDate=2024-11-01&endDate=2024-11-04
+
+###
+GET http://localhost:3000/report/sells?startDate=2024-11-01&endDate=2024-11-04
