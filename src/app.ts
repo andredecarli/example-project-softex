@@ -7,6 +7,7 @@ import provider from './admin/auth-provider.js';
 import options from './admin/options.js';
 import clientRouter from './controller/client.js';
 import categoryRouter from './controller/category.js';
+import productRouter from './controller/product.js';
 
 const port = process.env.PORT || 3000;
 
@@ -41,6 +42,7 @@ const start = async () => {
 
   app.use('/client', clientRouter);
   app.use('/category', categoryRouter);
+  app.use('/product', productRouter);
 
   app.listen(port, () => {
     // eslint-disable-next-line

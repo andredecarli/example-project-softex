@@ -11,12 +11,21 @@ datasource db {
 }
 
 model Client {
-  id Int @id @default(autoincrement())
-  login String @unique
-  password String
+  id        Int @id @default(autoincrement())
+  login     String @unique
+  password  String
 }
 
 model Category {
-  id Int @id @default(autoincrement())
-  name String @unique
+  id        Int @id @default(autoincrement())
+  name      String @unique
+  products  Product[]
+}
+
+model Product {
+  id          Int @id @default(autoincrement())
+  name        String
+  price       Float
+  categoryId  Int
+  category    Category @relation(fields: [categoryId], references: [id] )
 }

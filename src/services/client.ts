@@ -13,7 +13,7 @@ export default class ClientService {
 
     const hashedPassword = await bcrypt.hash(password, 10);
     const newClient = await ClientRepository.insert({ login, password: hashedPassword });
-    return { id: newClient.id, login: newClient.login };
+    return newClient;
   }
 
   static async list() {
@@ -26,7 +26,7 @@ export default class ClientService {
     if (!client) {
       throw new NotFoundError('client not found');
     }
-    return { id: client.id, login: client.login };
+    return client;
   }
 
   static async delete(id: number) {
@@ -49,9 +49,14 @@ export default class ClientService {
 
   static async auth(login: string, password: string) {
     const client = await ClientRepository.getByLogin(login);
-    if (!client || (!await bcrypt.compare(password, client.password))) {
+    if (!client) {
       throw new UnauthorizedError('wrong credentials');
     }
-    return { id: client.id, login: client.login };
+    const pass = await ClientRepository.getPasswordById(client.id);
+    const passOk = await bcrypt.compare(password, pass.password);
+    if (!passOk) {
+      throw new UnauthorizedError('wrong credentials');
+    }
+    return client;
   }
 }
