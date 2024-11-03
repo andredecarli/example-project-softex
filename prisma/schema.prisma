@@ -34,11 +34,12 @@ model Product {
 }
 
 model Order {
-  id        Int @id @default(autoincrement())
-  total     Float
-  clientId  Int
-  client    Client @relation(fields: [clientId], references: [id])
-  itens     OrderItem[]
+  id            Int @id @default(autoincrement())
+  total         Float
+  clientId      Int
+  creationDate  DateTime @default(now())
+  client        Client @relation(fields: [clientId], references: [id])
+  itens         OrderItem[]
 }
 
 model OrderItem {

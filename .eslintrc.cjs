@@ -1,6 +1,6 @@
 module.exports = {
   parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint', 'prettier'],
+  plugins: ['@stylistic', 'prettier'],
   env: {
     es6: true,
     node: true,
@@ -11,9 +11,9 @@ module.exports = {
     sourceType: 'module',
   },
   rules: {
-    indent: ['error', 2],
+    '@stylistic/indent': ['error', 2],
     'max-len': ['error', 120],
-    'linebreak-style': ['error', 'unix'],
+    'linebreak-style': ['error', 'windows'],
     quotes: ['error', 'single'],
     semi: ['error', 'always'],
     'no-underscore-dangle': 'off',

@@ -9,6 +9,7 @@ import clientRouter from './controller/client.js';
 import categoryRouter from './controller/category.js';
 import productRouter from './controller/product.js';
 import orderRouter from './controller/order.js';
+import reportRouter from './controller/report.js';
 
 const port = process.env.PORT || 3000;
 
@@ -45,6 +46,7 @@ const start = async () => {
   app.use('/category', categoryRouter);
   app.use('/product', productRouter);
   app.use('/order', orderRouter);
+  app.use('/report', reportRouter);
 
   app.listen(port, () => {
     // eslint-disable-next-line
