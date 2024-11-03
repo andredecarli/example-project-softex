@@ -1,19 +1,16 @@
 import express from 'express';
 import AdminJS from 'adminjs';
+import bodyParser from 'body-parser';
 import { buildAuthenticatedRouter } from '@adminjs/express';
 
 import provider from './admin/auth-provider.js';
 import options from './admin/options.js';
-import initializeDb from './db/index.js';
+import clientRouter from './controller/client/index.js';
 
 const port = process.env.PORT || 3000;
 
-console.log('dale');
-
 const start = async () => {
   const app = express();
-
-  await initializeDb();
 
   const admin = new AdminJS(options);
 
@@ -38,11 +35,14 @@ const start = async () => {
     },
   );
 
+  app.use(bodyParser.json());
   app.use(admin.options.rootPath, router);
+
+  app.use('/client', clientRouter);
 
   app.listen(port, () => {
     // eslint-disable-next-line
-    console.log(`Test available at http://localhost:${port}${admin.options.rootPath}`);
+    console.log(`AdminJS available at http://localhost:${port}${admin.options.rootPath}`);
   });
 };
 
