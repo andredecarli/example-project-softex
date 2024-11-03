@@ -2,6 +2,35 @@ POST http://localhost:3000/client
 Content-Type: application/json
 
 {
-  "login": "teste",
-  "password": "senha"
+  "login": "deco",
+  "password": "12345"
+}
+
+###
+
+GET http://localhost:3000/client
+
+###
+
+GET http://localhost:3000/client/5
+
+###
+
+DELETE http://localhost:3000/client/9
+
+###
+POST http://localhost:3000/client/login
+Content-Type: application/json
+
+{
+  "login": "deco",
+  "password": "12345"
+}
+
+###
+POST http://localhost:3000/category
+Content-Type: application/json
+
+{
+  "name": "Cafés"
 }

@@ -5,7 +5,8 @@ import { buildAuthenticatedRouter } from '@adminjs/express';
 
 import provider from './admin/auth-provider.js';
 import options from './admin/options.js';
-import clientRouter from './controller/client/index.js';
+import clientRouter from './controller/client.js';
+import categoryRouter from './controller/category.js';
 
 const port = process.env.PORT || 3000;
 
@@ -39,6 +40,7 @@ const start = async () => {
   app.use(admin.options.rootPath, router);
 
   app.use('/client', clientRouter);
+  app.use('/category', categoryRouter);
 
   app.listen(port, () => {
     // eslint-disable-next-line

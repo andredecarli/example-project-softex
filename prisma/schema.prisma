@@ -15,3 +15,8 @@ model Client {
   login String @unique
   password String
 }
+
+model Category {
+  id Int @id @default(autoincrement())
+  name String @unique
+}
