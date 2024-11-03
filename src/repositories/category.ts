@@ -14,7 +14,7 @@ export default class CategoryRepository {
   }
 
   static async getById(id: number) {
-    return prisma.category.findUnique({ where: { id } });
+    return prisma.category.findUnique({ where: { id }, include: { products: true } });
   }
 
   static async deleteById(id: number) {
